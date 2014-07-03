@@ -57,9 +57,9 @@ typedef NS_ENUM(NSInteger, RobotAction) {
 
 - (void)run {
   while (true) {
-    [self moveAhead:80];
-    [self turnRobotRight:20];
     [self moveAhead:100];
+    [self turnRobotRight:70];
+    [self moveAhead:400];
     [self shoot];
     [self turnRobotLeft:10];
   }
