@@ -14,7 +14,6 @@ typedef NS_ENUM(NSInteger, RobotState) {
     RobotStateTurnaround,
     RobotStateFiring,
     RobotStateSearching,
-    RobotStateGotHit
 };
 
 @implementation BestRobotEver {
@@ -38,34 +37,34 @@ typedef NS_ENUM(NSInteger, RobotState) {
                     [self turnGunLeft:abs(angle)];
                 }
                 [self shoot];
+                [self shoot];
+                [self shoot];
+                
             }
         }
         
         if (_currentRobotState == RobotStateSearching) {
-            [self moveAhead:50];
-            [self turnRobotLeft:20];
-            [self moveAhead:50];
-            [self turnRobotRight:20];
+            [self moveAhead:60];
+            [self turnRobotLeft:40];
+            [self moveAhead:60];
+            [self turnRobotRight:40];
         }
         
         if (_currentRobotState == RobotStateDefault) {
             [self moveAhead:100];
-        }
-        if (_currentRobotState == RobotStateGotHit) {
-            
-            NSLog (@"if statement generated");
         }
     }
 }
 
 - (void)bulletHitEnemy:(Bullet *)bullet {
     // There are a couple of neat things you could do in this handler
-    
+    [self shoot];
+    [self shoot];
     [self shoot];
     
 }
 
-- (void)scannedRobot:(Robot *)robot atPosition:(CGPoint)position {
+-(void)scannedRobot:(Robot *)robot atPosition:(CGPoint)position {
     if (_currentRobotState != RobotStateFiring) {
         [self cancelActiveAction];
     }
@@ -74,6 +73,7 @@ typedef NS_ENUM(NSInteger, RobotState) {
     _lastKnownPositionTimestamp = self.currentTimestamp;
     _currentRobotState = RobotStateFiring;
 }
+
 
 - (void)hitWall:(RobotWallHitDirection)hitDirection hitAngle:(CGFloat)angle {
     if (_currentRobotState != RobotStateTurnaround) {
@@ -89,7 +89,7 @@ typedef NS_ENUM(NSInteger, RobotState) {
             
         }
         
-        [self moveAhead:20];
+        [self moveAhead:100];
         
         _currentRobotState = previousState;
     }
@@ -97,10 +97,9 @@ typedef NS_ENUM(NSInteger, RobotState) {
 
 
 -(void)gotHit {
-    _currentRobotState = RobotStateGotHit;
     [self shoot];
     [self turnRobotLeft:arc4random() % 180];
-    [self moveBack: arc4random() % 250];
+    [self moveBack: (arc4random() % 400) +300];
     
     
     
